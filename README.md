@@ -188,13 +188,203 @@ that will have common /CRUD/ operations so that it can work with any data source
 such as SQL Server, Oracle, In-Memory Data etc. Make sure you have a type constraint
 on T were it should be of reference type and can be of type Entity which has one
 property called Id. IRepository<T> should have following methods
-1. void Add(T item)
-2. void Remove(T item)
-3. Void Save()
-4. IEnumerable<T> GetAll()
-5. T GetById(int id)
+  1. void Add(T item)
+  2. void Remove(T item)
+  3. Void Save()
+  4. IEnumerable<T> GetAll()
+  5. T GetById(int id)
 Explore following topics
 Generics in .NET
 Generic classes and methods
 Collections and Data Structures
 Commonly Used Collection Types
+  
+namespace RepositoryUsingEFinMVC.GenericRepository
+{
+    public interface IGenericRepository<T> where T : class
+    {
+        IEnumerable<T> GetAll();
+        T GetById(object id);
+        void Insert(T obj);
+        void Update(T obj);
+        void Delete(object id);
+        void Save();
+    }
+}
+  
+ namespace RepositoryUsingEFinMVC.GenericRepository
+{
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    {
+        public EmployeeDBContext _context = null;
+        public DbSet<T> table = null;
+
+        public GenericRepository()
+        {
+            this._context = new EmployeeDBContext();
+            table = _context.Set<T>();
+        }
+
+        public GenericRepository(EmployeeDBContext _context)
+        {
+            this._context = _context;
+            table = _context.Set<T>();
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return table.ToList();
+        }
+
+        public T GetById(object id)
+        {
+            return table.Find(id);
+        }
+
+        public void Insert(T obj)
+        {
+            table.Add(obj);
+        }
+
+        public void Update(T obj)
+        {
+            table.Attach(obj);
+            _context.Entry(obj).State = EntityState.Modified;
+        }
+
+        public void Delete(object id)
+        {
+            T existing = table.Find(id);
+            table.Remove(existing);
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
+    }
+}
+
+using RepositoryUsingEFinMVC.DAL;
+using RepositoryUsingEFinMVC.GenericRepository;
+using System.Collections.Generic;
+namespace RepositoryUsingEFinMVC.Repository
+{
+    public interface IEmployeeRepository : IGenericRepository<Employee>
+    {
+        IEnumerable<Employee> GetEmployeesByGender(string Gender);
+        IEnumerable<Employee> GetEmployeesByDepartment(string Dept);
+    }
+}
+  
+  namespace RepositoryUsingEFinMVC.Repository
+{
+    public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
+    {
+        public IEnumerable<Employee> GetEmployeesByGender(string Gender)
+        {
+            return _context.Employees.Where(emp => emp.Gender == Gender).ToList();
+        }
+
+        public IEnumerable<Employee> GetEmployeesByDepartment(string Dept)
+        {
+            return _context.Employees.Where(emp => emp.Dept == Dept).ToList();
+        }
+    }
+}
+  
+  
+  
+  using RepositoryUsingEFinMVC.Repository;
+using System.Web.Mvc;
+using RepositoryUsingEFinMVC.DAL;
+using RepositoryUsingEFinMVC.GenericRepository;
+
+namespace RepositoryUsingEFinMVC.Controllers
+{
+    public class EmployeeController : Controller
+    {
+        private IGenericRepository<Employee> repository = null;    
+        private IEmployeeRepository employee_repository = null;
+
+        public EmployeeController()
+        {
+            this.employee_repository = new EmployeeRepository();
+            this.repository = new GenericRepository<Employee>();
+        }
+
+        public EmployeeController(EmployeeRepository repository)
+        {
+            this.employee_repository = repository;
+        }
+        public EmployeeController(IGenericRepository<Employee> repository)
+        {
+            this.repository = repository;
+        }
+
+
+        [HttpGet]
+        public ActionResult Index()
+        {
+            //you can not access the below two mwthods using generic repository
+            //var model = repository.GetEmployeesByDepartment("IT");
+            var model = employee_repository.GetEmployeesByGender("Male");
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult AddEmployee()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddEmployee(Employee model)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.Insert(model);
+                repository.Save();
+                return RedirectToAction("Index", "Employee");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult EditEmployee(int EmployeeId)
+        {
+            Employee model = repository.GetById(EmployeeId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditEmployee(Employee model)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.Update(model);
+                repository.Save();
+                return RedirectToAction("Index", "Employee");
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DeleteEmployee(int EmployeeId)
+        {
+            Employee model = repository.GetById(EmployeeId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int EmployeeID)
+        {
+            repository.Delete(EmployeeID);
+            repository.Save();
+            return RedirectToAction("Index", "Employee");
+        }
+    }
+}
