@@ -17,8 +17,11 @@ Generic Collection
 They are multiple generic collections in C#. Most widely used are following
   
 IEnumerable<T>
+  
 IQueryable<T>
+  
 List<T>
+  
 Dictionary<TKey,TValue>
 
 Difference between Generics and Non Generic Collection
