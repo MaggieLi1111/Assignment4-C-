@@ -433,7 +433,9 @@ Lambda operator is used to create an anonymous method. It uses delegate to creat
 
 
 Action, Predicate and Func
+  
 Action, Predicate and Func are predefined generic delegate.
+  
 Action delegate takes generic input parameter and does not return any value. Its return type is void
 Predicate delegate takes generic input parameter and returns boolean value
 Func delegate takes generic input parameters and returns generic value
