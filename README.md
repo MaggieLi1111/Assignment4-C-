@@ -399,3 +399,41 @@ namespace RepositoryUsingEFinMVC.Controllers
         }
     }
 }
+
+  
+  
+  
+  
+ Delegate:
+  
+ A delegate is a type safe function pointer.
+The signature of delegate must match the signature of function, the delegate points to.
+  
+  Anonymous Type
+Encapsulate a set of read-only properties and their value into a single object
+No need to explicitly define a type first.
+Use of the new var keyword in conjunction with the object initialization syntax
+
+
+At compile time, the C# compiler will autogenerate an uniquely named class
+The class name is not visible from C#
+Using implicit typing (var keyword) is mandatory
+Anonymous types are reference types directly derived from System.Object
+Anonymous method
+Anonymous method is a method without a name. A delegate is used to create an anonymous method. 
+
+
+
+
+An anonymous method can be created with the help of lambda operator (=>)
+
+Lambda Operator =>
+Lambda operator is used to create an anonymous method. It uses delegate to create an anonymous method. Left side to lambda operator is parameter/s and right side method body
+
+
+
+Action, Predicate and Func
+Action, Predicate and Func are predefined generic delegate.
+Action delegate takes generic input parameter and does not return any value. Its return type is void
+Predicate delegate takes generic input parameter and returns boolean value
+Func delegate takes generic input parameters and returns generic value
