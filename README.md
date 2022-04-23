@@ -25,13 +25,21 @@ List<T>
 Dictionary<TKey,TValue>
 
 Difference between Generics and Non Generic Collection
+  
 A Generic collection is a class that provides type safety without having to derive from a base collection type and implement type-specific members.
+  
 A Non-generic collection is a specialized class for data storage and retrieval that provides support for stacks, queues, lists and hash tables.
+  
 The Generic Collection classes are in the System. Collections. Generics namespace.
+  
 The Non -generic Collection classes are in the System. Collections namespace.
+  
 A Generic Collection is strongly typed.
+  
 A Non-Generic Collection is not strongly typed.
+  
 The Generic Collections store elements internally in arrays of their actual types.
+  
 The Non-generic collections store elements internally in object arrays so it can store any type of data.
  
 2. How would you create a list of strings, using the generic List class?
