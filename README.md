@@ -478,7 +478,7 @@ An anonymous method can be created with the help of lambda operator (=>)
 Lambda Operator =>
   
 Lambda operator is used to create an anonymous method. It uses delegate to create an anonymous method. 
-Left side to lambda operator is parameter/s and right side method body
+Left side to lambda operator is input parameter/s and right side method body
 
 
  public void ActionExample()
