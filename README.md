@@ -403,13 +403,24 @@ namespace RepositoryUsingEFinMVC.Controllers
   
   
   
+Delegate:
   
- Delegate:
+A delegate is a type safe function pointer which takes a function or a method as parameter; reference data type.
   
- A delegate is a type safe function pointer.
 The signature of delegate must match the signature of function, the delegate points to.
   
-  Anonymous Type
+Built-in Delegates(predefined delegates):
+  
+Action, Predicate and Func
+  
+Action delegate takes generic input parameter and does not return any value. Its return type is void.
+  
+Predicate delegate takes generic input parameter and returns boolean value
+  
+Func delegate takes generic input parameters and returns generic value
+
+  
+Anonymous Type
 Encapsulate a set of read-only properties and their value into a single object
 No need to explicitly define a type first.
 Use of the new var keyword in conjunction with the object initialization syntax
@@ -432,10 +443,3 @@ Lambda operator is used to create an anonymous method. It uses delegate to creat
 
 
 
-Action, Predicate and Func
-  
-Action, Predicate and Func are predefined generic delegate.
-  
-Action delegate takes generic input parameter and does not return any value. Its return type is void
-Predicate delegate takes generic input parameter and returns boolean value
-Func delegate takes generic input parameters and returns generic value
