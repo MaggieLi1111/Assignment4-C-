@@ -414,11 +414,49 @@ Built-in Delegates(predefined delegates):
 Action, Predicate and Func
   
 Action delegate takes generic input parameter and does not return any value. Its return type is void.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp2
+{
+    internal class PredefinedDelegates
+    {
+        //fibonazzi sequence: 0 1 1 2 5 ...
+        private void Fibonacci(int length)
+        {
+            int a = 0, b = 1;
+            int c = 0;
+            for (int i = 0; i < length; i++)
+            {
+                Console.WriteLine(a + " ");
+                c = a + b;
+                a = b;
+                b = c;
+            }
+        }
+
+       public void ActionExample()
+        {
+            Action<int> fibAction = new Action<int>(Fibonacci);
+            fibAction(10);
+        }
+    }
+}  
+  
+PredefinedDelegates predefinedDelegates = new PredefinedDelegates();
+  
+predefinedDelegates.ActionExample();
+  
   
 Predicate delegate takes generic input parameter and returns boolean value
   
 Func delegate takes generic input parameters and returns generic value
-
+  
+  
   
 Anonymous Type
 Encapsulate a set of read-only properties and their value into a single object
