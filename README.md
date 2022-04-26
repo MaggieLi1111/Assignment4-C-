@@ -402,14 +402,19 @@ namespace RepositoryUsingEFinMVC.Controllers
 
   
   
+————————————————
   
-Delegate:如果我们想将函数作为参数传递怎么办？C＃如何处理回调函数或事件处理程序？答案是-委托(delegate)。委托(Delegate) 是存有对某个方法的引用的一种引用类型变量。引用可在运行时被改变。
-    
+Delegate:如果我们想将函数作为参数传递怎么办？C＃如何处理回调函数或事件处理程序？
+  
+答案是-委托(delegate)。委托(Delegate) 是存有对某个方法的引用的一种引用类型变量。引用可在运行时被改变。
+  
+Delegate委托是实现方法的抽象，实现方法的多态。（Interface接口是实现类的抽象，实现类的多态）
+
 A delegate is a type-safe function pointer which takes a function or a method as parameter; reference data type.
   
 The signature of delegate must match the signature of function, the delegate points to.
   
-  
+————————————————
 Custom-delegate syntax:自定义委托
   
   [access modifier] delegate [return type] [delegate name]([parameters])
@@ -430,7 +435,7 @@ MyDelegate del = MethodA;
 // 或者 lambda 表达式 
 MyDelegate del = (string msg) =>  Console.WriteLine(msg);
 
-
+————————————————
   
 Generics Delegate:泛型委托
   public delegate T add<T>(T param1, T param2);
@@ -457,8 +462,10 @@ class Program
     }
 }
   
-
+————————————————
   
+既然是对方法的一种抽象，那么我们最关注的当然就是方法的返回值以及方法的参数了。如果某个方法想委托我去做事，那么请你遵循我的规矩，就是返回值为void，参数为一个字符串。我们这个委托的含义是，当某个人来了，就向他说点东西。
+
 Built-in Delegates(predefined delegates):
   
 Action, Predicate and Func
