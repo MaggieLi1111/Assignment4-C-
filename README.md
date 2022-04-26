@@ -415,6 +415,7 @@ A delegate is a type-safe function pointer which takes a function or a method as
 The signature of delegate must match the signature of function, the delegate points to.
   
 ————————————————
+  
 Custom-delegate syntax:自定义委托
   
   [access modifier] delegate [return type] [delegate name]([parameters])
@@ -438,6 +439,7 @@ MyDelegate del = (string msg) =>  Console.WriteLine(msg);
 ————————————————
   
 Generics Delegate:泛型委托
+  
   public delegate T add<T>(T param1, T param2);
 
 class Program
