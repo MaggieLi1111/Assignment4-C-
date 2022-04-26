@@ -403,11 +403,61 @@ namespace RepositoryUsingEFinMVC.Controllers
   
   
   
-Delegate:
-  
-A delegate is a type safe function pointer which takes a function or a method as parameter; reference data type.
+Delegate:如果我们想将函数作为参数传递怎么办？C＃如何处理回调函数或事件处理程序？答案是-委托(delegate)。委托(Delegate) 是存有对某个方法的引用的一种引用类型变量。引用可在运行时被改变。
+    
+A delegate is a type-safe function pointer which takes a function or a method as parameter; reference data type.
   
 The signature of delegate must match the signature of function, the delegate points to.
+  
+  
+Custom-delegate syntax:自定义委托
+  
+  [access modifier] delegate [return type] [delegate name]([parameters])
+
+  // 步骤1：声明委托  
+public delegate void MyDelegate(string msg); 
+  
+  // 步骤2：设置目标方法
+static void MethodA(string message)
+{
+    Console.WriteLine(message);
+}
+
+//步骤3：调用委托
+MyDelegate del = new MyDelegate(MethodA);
+// 或者
+MyDelegate del = MethodA; 
+// 或者 lambda 表达式 
+MyDelegate del = (string msg) =>  Console.WriteLine(msg);
+
+
+  
+Generics Delegate:泛型委托
+  public delegate T add<T>(T param1, T param2);
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        add<int> sum = Sum;
+        Console.WriteLine(sum(10, 20));
+
+        add<string> con = Concat;
+        Console.WriteLine(conct("Hello ","World!!"));
+    }
+
+    public static int Sum(int val1, int val2)
+    {
+        return val1 + val2;
+    }
+
+    public static string Concat(string str1, string str2)
+    {
+        return str1 + str2;
+    }
+}
+  
+
   
 Built-in Delegates(predefined delegates):
   
